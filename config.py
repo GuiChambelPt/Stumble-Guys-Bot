@@ -1,0 +1,2 @@
+token = ''
+channeltosend = 1
