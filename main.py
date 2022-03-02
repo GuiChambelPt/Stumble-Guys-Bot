@@ -12,7 +12,7 @@ def screenshot():
     cv2.imwrite("code.png", image)
 
 while code == True:
-    seecode = pyautogui.locateOnScreen('inicialcode.png', confidence=.7)
+    seecode = pyautogui.locateOnScreen('./input/inicialcode.png', confidence=.7)
     if seecode is None:
         print('Dont Found')
     else:
@@ -24,7 +24,7 @@ while code == True:
 async def on_ready():
     if code == False:
         channel = bot.get_channel(channeltosend)
-        await channel.send(file = discord.File("code.png"))
+        await channel.send(file = discord.File("./output/code.png"))
         quit()
 
         
