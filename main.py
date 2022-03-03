@@ -9,7 +9,7 @@ code = True
 def screenshot():
     image = pyautogui.screenshot()
     image = cv2.cvtColor(np.array(image),cv2.COLOR_RGB2BGR)
-    cv2.imwrite("code.png", image)
+    cv2.imwrite("./output/code.png", image)
 
 while code == True:
     seecode = pyautogui.locateOnScreen('./input/inicialcode.png', confidence=.7)
@@ -29,4 +29,3 @@ async def on_ready():
 
         
 bot.run(token)
-
