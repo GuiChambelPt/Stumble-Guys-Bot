@@ -2,9 +2,14 @@ import numpy as np
 import cv2
 import pyautogui
 import discord
-from config import channeltosend, token
+import json
+f = open ('data/data.json', "r+")
+token2 = json.loads(f.read())
+token1 = token2["token"]
+
+from tkinter import *
 bot = discord.Client()
-code = True
+code = False
 
 
 def screenshot():
@@ -46,13 +51,6 @@ while code2 == True:
         send = False
         loading = True
 
-@bot.event
-async def on_ready():
-    if send == False:
-        channel = bot.get_channel(channeltosend)
-        await channel.send(file = discord.File("./output/code.png"))
-        
-
 while loading == True:
     loading2 = pyautogui.locateOnScreen('./input/portuguese/loading.png', confidence=.7)
     if seecode is None:
@@ -62,14 +60,62 @@ while loading == True:
         loading2 = False
         icy = True
         
-while icy == True:
-    icyhe = pyautogui.locateOnScreen('./input/portuguese/icyheights.png', confidence=.7)
-    if seecode is None:
-        print('Dont Found')
+@bot.event
+async def on_ready():
+    if send == False:
+        channel = bot.get_channel(channeltosend)
+        await channel.send(file = discord.File("./output/code.png"))
+        
+
+
+
+
+
+window = Tk()
+window.title("Fortnite")
+mapa = None
+
+
+def display():
+    if(x1.get()==1):
+        print(1)
     else:
-        print('Found match')
-        icy = False
+        print(0)
+
+def submit():
+    token = entrytoken.get()
+    entrytoken.config(state=DISABLED)
+    tokentoput = {"token": token}
+    jsonString = json.dumps(tokentoput)
+    jsonFile = open("data/data.json", "w")
+    jsonFile.write(jsonString)
+    jsonFile.close()
+x1 = IntVar()
+
+check_button = Checkbutton(window,
+                           text="I agree to something",
+                           variable=x1,
+                           onvalue=1,
+                           offvalue=0,
+                           command=display,
+                           font=('Arial',20),
+                           compound='left')
+check_button.pack()
 
 
 
-bot.run(token)
+entrytoken = Entry(window,
+              font=("Arial",50),
+              fg="#00FF00",
+              bg="black",
+              show="*"
+              )
+
+entrytoken.pack(side=LEFT)
+
+submit_button = Button(window,text="submit",command=submit)
+submit_button.pack(side=RIGHT)
+
+window.mainloop()
+
+bot.run(token1)
